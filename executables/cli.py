@@ -5,15 +5,18 @@ from typing import Optional
 
 import click
 from schnapsen.bots import MLDataBot, train_ML_model, MLPlayingBot, RandBot
-
 from schnapsen.bots.example_bot import ExampleBot
+from schnapsen.bots.bully import BullyBot
+from schnapsen.bots.rdeep import RdeepBot
+from schnapsen.bots.mybot import MyBot
+from schnapsen.bots.alphabeta import AlphaBetaBot 
+from schnapsen.bots.groupbot_r import GroupBotRemember
+from schnapsen.bots.groupbot_t import GroupBotTracking  
 
 from schnapsen.game import (Bot, Move, PlayerPerspective,
                             SchnapsenGamePlayEngine, Trump_Exchange)
 from schnapsen.twenty_four_card_schnapsen import \
     TwentyFourSchnapsenGamePlayEngine
-
-from schnapsen.bots.rdeep import RdeepBot
 
 
 @click.group()
@@ -43,9 +46,9 @@ def play_games_and_return_stats(engine: SchnapsenGamePlayEngine, bot1: Bot, bot2
 @main.command()
 def random_game() -> None:
     engine = SchnapsenGamePlayEngine()
-    bot1 = RandBot(12112121)
+    bot1 = GroupBotTracking(12112121)
     bot2 = RandBot(464566)
-    for i in range(1000):
+    for i in range(10):
         winner_id, game_points, score = engine.play_game(bot1, bot2, random.Random(i))
         print(f"Game ended. Winner is {winner_id} with {game_points} points, score {score}")
 

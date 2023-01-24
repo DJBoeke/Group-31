@@ -1,13 +1,13 @@
 import random
 from schnapsen.bots import SchnapsenServer
-from schnapsen.bots import RandBot, AlphaBetaBot, RdeepBot
+from schnapsen.bots import RandBot, AlphaBetaBot, RdeepBot, BullyBot, MyBot
 from schnapsen.game import SchnapsenGamePlayEngine, Bot
 import click
 
 
 @click.command()
 @click.option('--bot', '-b',
-              type=click.Choice(['AlphaBetaBot', 'RdeepBot', 'MLDataBot', 'MLPlayingBot', 'RandBot'], case_sensitive=False),
+              type=click.Choice(['AlphaBetaBot', 'RdeepBot', 'MLDataBot', 'MLPlayingBot', 'RandBot', 'BullyBot', 'MyBot'], case_sensitive=False),
               default='RandBot', help="The bot you want to play against.")
 def main(bot: str) -> None:
     """Run the GUI."""
@@ -20,6 +20,10 @@ def main(bot: str) -> None:
             bot1 = AlphaBetaBot()
         elif bot.lower() == "rdeepbot":
             bot1 = RdeepBot(num_samples=16, depth=4, rand=random.Random(42))
+        elif bot.lower() == "bullybot":
+            bot1 = BullyBot(12)
+        elif bot.lower() == "mybot":
+            bot1 = MyBot(12)   
         else:
             raise NotImplementedError
         bot2 = s.make_gui_bot(name="mybot2")
